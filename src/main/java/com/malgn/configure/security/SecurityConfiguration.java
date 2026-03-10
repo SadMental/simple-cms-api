@@ -1,5 +1,6 @@
 package com.malgn.configure.security;
 
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,19 @@ public class SecurityConfiguration {
 
         http.authorizeHttpRequests(
             request ->
-                request.anyRequest().authenticated());
+                request
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/api-docs/**",
+                                "/swagger-resources/**",
+                                "/webjars/**",
+                                "/api"
+                        ).permitAll()
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                        .requestMatchers("/content/**").permitAll()
+                        .anyRequest().authenticated());
 
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(AbstractHttpConfigurer::disable);

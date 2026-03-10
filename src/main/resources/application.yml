@@ -30,6 +30,11 @@ spring:
     virtual:
       enabled: on
 
+## springdoc
+springdoc:
+  swagger-ui:
+    path: /api
+
 
 ## p6spy
 decorator:
