@@ -1,9 +1,7 @@
 # 2026 신입 Back-End 개발자 코딩 과제 - 간단한 CMS REST API
 
-2026년도 신입 Back-End 개발자 코딩 과제입니다.
+2026년도 신입 Back-End 개발자 코딩 과제 제출입니다.\
 간단한 CMS(Contents Management System) REST API 를 구현하는 것이 목표입니다.
-
-외부 자료 검색 및 AI 도구 사용을 허용합니다. 다만, 제출물에 활용한 도구와 방식을 간단하게 명시해주시기 바랍니다.
 
 ## Spec
 
@@ -12,15 +10,7 @@
 - Spring Security
 - JPA
 - H2 (db)
-- Lombok (필요시)
-
-## 과제 목표
-
-- 간단한 CMS 콘텐츠 관리 API 를 구현 해주세요.
-- DB Schema 모두 구현해주세요.
-- DB 는 h2 를 사용해주세요.
-- 가능한 예외처리도 구현해주세요.
-- 필요하다고 생각되는 부분은 추가로 구현해도 됩니다.
+- Lombok
 
 ## 데이터 모델
 
@@ -37,48 +27,46 @@
 | last_modified_date | 수정일 | 마지막 수정일     | timestamp                   |    |
 | last_modified_by   | 수정자 | 마지막 수정한 사용자 | varchar(50)                 |    |
 
-## 구현 기능
-
-### 콘텐츠 관련 CRUD
-
-시스템에 등록된 콘텐츠에 대한 CRUD 를 필수로 구현해주세요.
-
-#### 기능
-- 콘텐츠 추가
-- 콘텐츠 목록 조회
-  - 반드시 페이징 처리를 해주세요.
-- 콘텐츠 상세 조회
-- 콘텐츠 수정
-- 콘텐츠 삭제
+### Members
+| 컬럼명                | 이름   | 설명                  | 데이터 타입                            | 비고 |
+|--------------------|------|---------------------|-----------------------------------|----|
+| id                 | 아이디  | 고유 아이디              | bigint primary key not null       |    |
+| name               | 이름   | 사용자 이름              | varchar(50) not null unique       |    |
+| password        | 비밀번호 | 암호화 비밀번호            | varchar(100) not null             |    |
+| role         | 권한   | 사용자 권한(USER, ADMIN) | varchar(5) not null default 'USER' |    |
+| created_date       | 생성일  | 생성한 날짜              | timestamp not null                |    |
+| last_modified_date         | 수정일  | 마지막 수정일             | timestamp                         |    |
 
 
-### 로그인
-- Spring Security 를 이용해서 로그인을 필수로 구현해주세요.
-- 로그인 방식은 자유롭게 선택하여 구현하되, `README.md` 에 명시해주세요
-- Role
-    - 관리자(ADMIN)
-    - 사용자(USER)
+## 프로젝트 구조
+```
+com.malgn
+├── configure          # 환경 설정 (Security, Swagger, JPA Auditing 등)
+├── restcontroller     # REST API 엔드포인트
+├── service            # 서비스 패키지
+├── repository         # Spring Data JPA 리포지토리
+├── entity             # JPA 엔티티 모델
+├── dto / vo           # 데이터 전달 객체
+├── error              # 공통 예외 처리
+└── enums              # 공통 열거형 (Role 등)
+```
 
-### 접근 권한
+## 실행 및 API 테스트 방법 (Swagger)
 
-- 접근 권한을 필수로 구현해주세요.
-- 콘텐츠 생성자 본인만 수정 + 삭제 가능하게 구현해주세요.
-- 단, 관리자(ADMIN) 인 경우 모든 콘텐츠에 대해 수정 + 삭제할 수 있게 구현해주세요.
+본 프로젝트는 SpringDoc OpenAPI를 활용하여 REST API 명세서를 자동화하였습니다.
+프로젝트 루트 폴더에 첨부된 `api-docs.json`(또는 pdf) 파일을 참고하시거나, 서버 실행 후 아래 방법으로 직접 테스트하실 수 있습니다.
 
-## 제출
+1. 서버 실행 시 InitDataConfiguration에서 테스트용 계정 자동 생성 (admin0~9, user0~9 / 비밀번호: 1234)
+2. `http://localhost:8080/api` 접속하여 Swagger UI API 문서 진입
+3. **[1. 인증 및 회원 API]** 의 `/login` 에서 위 계정으로 로그인하여 accessToken 발급
+4. 우측 상단의 `Authorize` 버튼을 눌러 발급받은 토큰을 입력 후 전체 API 테스트 진행
+  - admin 계정: 모든 게시글 수정/삭제 가능
+  - user 계정: 본인 작성 글만 수정/삭제 가능
 
-### 기한
+## 사용 AI 및 참고 자료
 
-- 본 메일 수신 후 26.03.09(월) 오후 3시까지 (주)맑은기술 채용 메일(recruit@malgn.com) 로 보내주시기 바랍니다. 
-
-### 제출물
-
-- 소스코드 (Zip 또는 Github repository 링크)
-- README.md
-    - 추가 내용이나 제출물 관련 내용을 추가헤주세요.
-    - 사용한 AI 또는 참고 자료가 있다면 간단히 명시
-- REST API Docs
-    - 자유롭게 작성해서 첨부해주세요.
+- Google Gemini
+- SpringDoc 공식 문서 및 깃허브 (https://springdoc.org/)
 
 
 
