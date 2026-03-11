@@ -20,7 +20,7 @@ public class ContentDto {
         return Content.builder()
                 .title(this.title)
                 .description(this.description)
-                .createdBy(this.createdBy)
+//                .createdBy(this.createdBy)
                 .build();
     }
 }

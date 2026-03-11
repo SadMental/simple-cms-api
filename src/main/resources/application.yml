@@ -52,3 +52,13 @@ logging:
     root: info
     web: info
     com.malgn: debug
+
+## Jwt Custom
+custom:
+  jwt:
+    # 비밀키
+    key_str: "a4bbkryrcO$p&lj6%7QQWFlv0XLtm5cM"
+    # 토큰 발급자
+    issuer: "malgn-cms"
+    # 토큰 만료시간(minute)
+    expiration: 60

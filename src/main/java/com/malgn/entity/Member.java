@@ -1,5 +1,6 @@
 package com.malgn.entity;
 
+import com.malgn.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -19,6 +20,9 @@ public class Member {
     @Column(nullable = false, length = 50)
     private String name;
 
+    @Column(nullable = false, length = 50)
+    private String password;
+
     @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 5)
@@ -31,7 +35,5 @@ public class Member {
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 
-    public enum Role {
-        USER, ADMIN
-    }
+
 }

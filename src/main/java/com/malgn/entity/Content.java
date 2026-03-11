@@ -2,6 +2,7 @@ package com.malgn.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -31,6 +32,7 @@ public class Content {
     private LocalDateTime createdDate;
 
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)
+    @CreatedBy
     private String createdBy;
 
     @Column(name = "last_modified_date")

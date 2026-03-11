@@ -2,6 +2,7 @@ package com.malgn.service;
 
 import com.malgn.dto.ContentDto;
 import com.malgn.entity.Content;
+import com.malgn.error.TargetNotFoundException;
 import com.malgn.repository.ContentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,19 @@ public class ContentService {
             content.setDescription(contentDto.getDescription());
         }
 
-        log.debug("수정된 Content = {}", content.getTitle());
+        log.debug("수정된 Content = {}", content);
 
         return content;
+
+    }
+
+    @Transactional
+    public Content viewDetail(Long id){
+        if(contentRepository.plusViewCount(id) == 0){
+            throw new TargetNotFoundException("해당 게시글이 존재하지 않습니다. ID: " + id);
+        }
+
+        return contentRepository.findById(id).get();
 
     }
 }

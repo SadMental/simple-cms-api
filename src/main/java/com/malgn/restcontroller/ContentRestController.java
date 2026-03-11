@@ -3,6 +3,7 @@ package com.malgn.restcontroller;
 import com.malgn.dto.ContentDto;
 import com.malgn.dto.ContentListDto;
 import com.malgn.entity.Content;
+import com.malgn.error.TargetNotFoundException;
 import com.malgn.repository.ContentRepository;
 import com.malgn.repository.MemberRepository;
 import com.malgn.service.ContentService;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,13 +25,15 @@ public class ContentRestController {
     @Autowired
     private ContentRepository contentRepository;
     @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
     private ContentService contentService;
 
     // 콘텐츠 추가
     @PostMapping("/add")
-    public Content add(@RequestBody ContentDto contentDto){
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public Content add(@RequestBody ContentDto contentDto, Authentication auth){
+//        String loginName = auth.getName();
+//        contentDto.setCreatedBy(loginName);
+
         Content content = contentRepository.save(contentDto.toSave());
         log.debug("Content = {}", content);
         return content;
@@ -52,19 +57,23 @@ public class ContentRestController {
     // 콘텐츠 상세 조회
     @GetMapping("/detail/{id}")
     public Content detail(@PathVariable Long id){
-        Content content = contentRepository.findById(id).orElseThrow();
+        Content content = contentService.viewDetail(id);
         log.debug("content = {}", content);
         return content;
     }
 
     // 콘텐츠 수정
     @PatchMapping("/edit/{id}")
-    public Content edit(@PathVariable Long id,@RequestBody ContentDto contentDto){
+    @PreAuthorize("hasRole('ADMIN') or @contentSecurity.isOwner(#id, authentication.name)")
+    public Content edit(@PathVariable Long id,@RequestBody ContentDto contentDto, Authentication auth){
+//        String loginName = auth.getName();
+//        contentDto.setLastModifiedBy(loginName);
         return contentService.update(id, contentDto);
     }
 
     // 콘텐츠 삭제
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN') or @contentSecurity.isOwner(#id, authentication.name)")
     public boolean delete(@PathVariable Long id){
         contentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. ID: " + id));

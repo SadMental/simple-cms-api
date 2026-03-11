@@ -3,7 +3,8 @@
 create table members
 (
     id                 bigint primary key      not null auto_increment,
-    name               varchar(50)             not null,
+    name               varchar(50)             not null unique,
+    password           varchar(100)             not null,
     role               varchar(5) default 'USER' not null ,
     created_date       timestamp default now() not null,
     last_modified_date timestamp
