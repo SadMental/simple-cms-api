@@ -3,6 +3,7 @@ package com.malgn.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,7 +29,8 @@ public class Content {
     @Column(name = "view_count", nullable = false)
     private Long viewCount = 0L;
 
-    @Column(name = "created_date", nullable = false, updatable = false, insertable = false)
+    @Column(name = "created_date", nullable = false, updatable = false)
+    @CreatedDate
     private LocalDateTime createdDate;
 
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)

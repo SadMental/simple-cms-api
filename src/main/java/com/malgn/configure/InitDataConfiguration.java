@@ -34,11 +34,11 @@ public class InitDataConfiguration implements CommandLineRunner {
                         .role(Role.ADMIN)
                         .build();
 
-                memberRepository.save(admin);
                 Member user = Member.builder()
                         .name("user" + i)
                         .password(passwordEncoder.encode("1234"))
                         .build();
+
                 memberList.add(admin);
                 memberList.add(user);
             }

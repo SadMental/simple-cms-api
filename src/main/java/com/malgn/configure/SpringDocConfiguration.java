@@ -17,25 +17,26 @@ public class SpringDocConfiguration implements WebMvcConfigurer {
     @Bean
     public OpenAPI info(){
         // 문서의 대표 정보 생성
-        Info info = new Info();
-        info.setVersion("0.0.1");
-        info.setTitle("simple-cms-api");
-        info.setDescription("REST API 명세");
+        Info info = new Info()
+            .version("0.0.1")
+            .title("simple-cms-api")
+            .description("2026 신입 Back-End 개발자 코딩 과제 - 간단한 CMS REST API 명세서");
 
         String jwtHeaderName = "Authorization"; // 헤더 이름
-        SecurityRequirement requirement = new SecurityRequirement(); // 보안 요구사항 객체
-        requirement.addList(jwtHeaderName);
+        SecurityRequirement requirement = new SecurityRequirement().addList(jwtHeaderName); // 보안 요구사항 객체
 
-        Components components = new Components();
-        components.addSecuritySchemes(
+        Components components = new Components()
+            .addSecuritySchemes(
                 jwtHeaderName,
                 new SecurityScheme()
                         .name(jwtHeaderName) // 헤더 이름
                         .type(SecurityScheme.Type.HTTP) // 통신유형
                         .scheme("bearer") // 토큰의 종류
+                        .bearerFormat("JWT")
         );
 
-        return new OpenAPI().info(info)
+        return new OpenAPI()
+                .info(info)
                 .addSecurityItem(requirement)
                 .components(components);
     }

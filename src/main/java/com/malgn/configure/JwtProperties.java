@@ -1,4 +1,4 @@
-package com.malgn.configure.aop;
+package com.malgn.configure;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

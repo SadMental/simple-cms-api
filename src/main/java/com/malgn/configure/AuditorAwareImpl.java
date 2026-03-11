@@ -1,4 +1,4 @@
-package com.malgn.configure.aop;
+package com.malgn.configure;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class AudiorAwareImpl implements AuditorAware<String> {
+public class AuditorAwareImpl implements AuditorAware<String> {
 
     @Override
     public Optional<String> getCurrentAuditor(){

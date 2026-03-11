@@ -1,9 +1,8 @@
 package com.malgn.configure.security;
 
-import com.malgn.configure.aop.JwtProperties;
+import com.malgn.configure.JwtProperties;
 import com.malgn.service.TokenService;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOError;
 import java.io.IOException;
 
 @Component

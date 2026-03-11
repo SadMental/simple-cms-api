@@ -1,7 +1,7 @@
 package com.malgn.service;
 
-import com.malgn.configure.aop.JwtProperties;
 import com.malgn.entity.Member;
+import com.malgn.error.NeedPermissionException;
 import com.malgn.repository.MemberRepository;
 import com.malgn.vo.MemberLoginRequestVO;
 import com.malgn.vo.MemberLoginResponseVO;
@@ -26,7 +26,7 @@ public class MemberService {
         Member member = memberRepository.findByName(name);
 
         if (!passwordEncoder.matches(password, member.getPassword())){
-            throw new IllegalArgumentException("비밀번호 불일치");
+            throw new NeedPermissionException("비밀번호 불일치");
         }
 
         String role = member.getRole().name();

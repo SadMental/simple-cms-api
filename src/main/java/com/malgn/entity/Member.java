@@ -3,6 +3,7 @@ package com.malgn.entity;
 import com.malgn.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -28,7 +29,8 @@ public class Member {
     @Column(nullable = false, length = 5)
     private Role role = Role.USER;
 
-    @Column(name = "created_date", nullable = false, updatable = false, insertable = false)
+    @Column(name = "created_date", nullable = false, updatable = false)
+    @CreatedDate
     private LocalDateTime createdDate;
 
     @Column(name = "last_modified_date")

@@ -1,6 +1,6 @@
 package com.malgn.service;
 
-import com.malgn.configure.aop.JwtProperties;
+import com.malgn.configure.JwtProperties;
 import com.malgn.entity.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
