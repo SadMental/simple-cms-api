@@ -65,7 +65,7 @@ com.malgn
 
 ## 사용 AI 및 참고 자료
 
-- Google Gemini
+- Google Gemini (아키텍처 설계 보조 및 Swagger 문서화 가이드 활용)
 - SpringDoc 공식 문서 및 깃허브 (https://springdoc.org/)
 
 
